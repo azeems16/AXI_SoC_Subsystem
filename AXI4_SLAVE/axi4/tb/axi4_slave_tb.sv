@@ -1,6 +1,6 @@
 `include "axi4_slave_coverage.sv"
+`include "axi4_slave_sva.sv"
 module axi4_slave_tb;
-
   // Parameters
   parameter int          NUM_REGS   = 4;
   parameter integer      ID_WIDTH   = 4;
@@ -50,6 +50,8 @@ module axi4_slave_tb;
   logic                  S_AXI_RVALID;
   logic                  S_AXI_RREADY;
 
+  logic                  write_en;
+  logic                  read_en ;
   // DUT Instantiation
   axi4_slave slave (
     .ACLK          (ACLK),
@@ -92,9 +94,60 @@ module axi4_slave_tb;
     .S_AXI_RRESP   (S_AXI_RRESP),
     .S_AXI_RLAST   (S_AXI_RLAST),
     .S_AXI_RVALID  (S_AXI_RVALID),
-    .S_AXI_RREADY  (S_AXI_RREADY)
+    .S_AXI_RREADY  (S_AXI_RREADY),
+
+    .write_en      (write_en),
+    .read_en       (read_en)            
   );
   
+   axi4_slave_sva u_sva (
+    .ACLK          (ACLK),
+    .ARESETN       (ARESETN),
+
+    // Write Address Channel
+    .S_AXI_AWID    (S_AXI_AWID),
+    .S_AXI_AWADDR  (S_AXI_AWADDR),
+    .S_AXI_AWLEN   (S_AXI_AWLEN),
+    .S_AXI_AWSIZE  (S_AXI_AWSIZE),
+    .S_AXI_AWBURST (S_AXI_AWBURST),
+    .S_AXI_AWVALID (S_AXI_AWVALID),
+    .S_AXI_AWREADY (S_AXI_AWREADY),
+
+    // Write Data Channel
+    .S_AXI_WDATA   (S_AXI_WDATA),
+    .S_AXI_WSTRB   (S_AXI_WSTRB),
+    .S_AXI_WLAST   (S_AXI_WLAST),
+    .S_AXI_WVALID  (S_AXI_WVALID),
+    .S_AXI_WREADY  (S_AXI_WREADY),
+
+    // Write Response Channel
+    .S_AXI_BID     (S_AXI_BID),
+    .S_AXI_BRESP   (S_AXI_BRESP),
+    .S_AXI_BVALID  (S_AXI_BVALID),
+    .S_AXI_BREADY  (S_AXI_BREADY),
+
+    // Read Address Channel
+    .S_AXI_ARID    (S_AXI_ARID),
+    .S_AXI_ARADDR  (S_AXI_ARADDR),
+    .S_AXI_ARLEN   (S_AXI_ARLEN),
+    .S_AXI_ARSIZE  (S_AXI_ARSIZE),
+    .S_AXI_ARBURST (S_AXI_ARBURST),
+    .S_AXI_ARVALID (S_AXI_ARVALID),
+    .S_AXI_ARREADY (S_AXI_ARREADY),
+
+    // Read Data Channel
+    .S_AXI_RID     (S_AXI_RID),
+    .S_AXI_RDATA   (S_AXI_RDATA),
+    .S_AXI_RRESP   (S_AXI_RRESP),
+    .S_AXI_RLAST   (S_AXI_RLAST),
+    .S_AXI_RVALID  (S_AXI_RVALID),
+    .S_AXI_RREADY  (S_AXI_RREADY),
+
+    .write_en      (write_en),
+    .read_en       (read_en)            
+  );
+
+
 axi4_slave_coverage axi4_slave_cg_tb;
  
 initial axi4_slave_cg_tb = new(ACLK);

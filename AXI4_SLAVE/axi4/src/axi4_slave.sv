@@ -45,7 +45,11 @@ module axi4_slave #(
     output logic [1:0]                S_AXI_RRESP    ,
     output logic                      S_AXI_RLAST    ,
     output logic                      S_AXI_RVALID   ,
-    input  logic                      S_AXI_RREADY
+    input  logic                      S_AXI_RREADY   ,
+
+    // Assertions
+    output logic                      write_en        ,
+    output logic                      read_en
 );
 localparam ADDR_LSB     = $clog2(DATA_WIDTH / 8);
 localparam ADDR_INDEX_W = $clog2(NUM_REGS);
@@ -403,4 +407,7 @@ always_ff @(posedge ACLK or negedge ARESETN) begin
         endcase
     end
 end
+
+assign write_en = awc_hs && wc_hs;
+assign read_en  = ar_hs;
 endmodule

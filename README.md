@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AXI SoC Subsystem Projects
 
 This repository contains a set of self-contained RTL design modules and subsystems, each focused on a specific digital design concept using Verilog/SystemVerilog.
@@ -60,3 +61,7 @@ You can clone the entire repo or use individual folders as IP blocks in your SoC
 Azeem Shah  
 RTL / SoC Design Enthusiast  
 📍 Canada  
+=======
+# AXI_SoC_Subsystem
+This project serves as a comprehensive integration of multiple AXI-compliant IP blocks into a unified SoC-style subsystem. It demonstrates modular RTL design, address mapping, and bus interfacing using the AXI4 and AXI-Lite protocols.
+>>>>>>> 63371c154e201435cfe108bc28a77f21cd519289
