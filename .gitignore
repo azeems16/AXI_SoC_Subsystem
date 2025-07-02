@@ -1,0 +1,22 @@
+﻿# Simulation & temp files
+*.vcd
+*.log
+*.wlf
+*.jou
+*.pb
+*.str
+*.rpt
+*.o
+*.out
+*.bin
+*.elf
+*.mem
+*.dat
+
+# Vivado/Quartus/etc.
+*.runs/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.Xil/
+*.sim/

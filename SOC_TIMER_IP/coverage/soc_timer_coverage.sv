@@ -1,0 +1,1 @@
+class soc_timer_coverage
