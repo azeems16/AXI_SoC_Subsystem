@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# AXI SoC Subsystem Projects
+# AXI SoC Subsystem
 
 This repository contains a set of self-contained RTL design modules and subsystems, each focused on a specific digital design concept using Verilog/SystemVerilog.
 
@@ -37,8 +37,6 @@ Each project includes clean, testable code and is structured for easy simulation
 ---
 
 ## Usage
-
-Each project is meant to be standalone. To simulate or integrate:
 
 1. Navigate to the project folder.
 2. Review included testbenches or simulation instructions.
