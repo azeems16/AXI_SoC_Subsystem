@@ -3,7 +3,7 @@
 
 This repository contains a set of self-contained RTL design modules and subsystems, each focused on a specific digital design concept using Verilog/SystemVerilog.
 
-Each project includes clean, testable code and is structured for easy simulation and integration.
+Each project includes clean, testable code and is structured for easy simulation and integration. This project serves as a comprehensive integration of multiple AXI-compliant IP blocks into a unified SoC-style subsystem. It demonstrates modular RTL design, address mapping, CDC techniques, and bus interfacing using the AXI4 and AXI-Lite protocols.
 
 ---
 
@@ -60,6 +60,4 @@ Azeem Shah
 RTL / SoC Designer
  
 =======
-# AXI_SoC_Subsystem
-This project serves as a comprehensive integration of multiple AXI-compliant IP blocks into a unified SoC-style subsystem. It demonstrates modular RTL design, address mapping, and bus interfacing using the AXI4 and AXI-Lite protocols.
 >>>>>>> 63371c154e201435cfe108bc28a77f21cd519289
