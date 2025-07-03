@@ -1,3 +1,5 @@
+`include "i2c_sva.sv"
+
 module i2c_slave_tb;
 
 logic       scl         ;     // from master
@@ -19,6 +21,16 @@ i2c_slave slave (
     .rd_data   (rd_data ) ,
     .rd_empty  (rd_empty) ,
     .rd_en     (rd_en   ) 
+);
+
+i2c_sva u_sva (
+    .rd_clk     (rd_clk)    ,
+    .scl        (scl)       ,
+    .sda        (sda)       ,
+    .rd_rst_n   (rd_rst_n)  ,
+    .rd_data    (rd_data)   ,
+    .rd_empty   (rd_empty)  ,
+    .rd_en      (rd_en)
 );
 
 always #5 rd_clk = ~rd_clk;

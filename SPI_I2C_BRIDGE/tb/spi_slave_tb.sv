@@ -1,3 +1,4 @@
+`include "spi_sva.sv"
 module spi_slave_tb;
 
 logic sclk      ;
@@ -16,6 +17,17 @@ spi_slave slave (
     .wr_rst_n  (wr_rst_n) ,
     .rx_data   (rx_data ) ,
     .wr_en     (wr_en   ) 
+);
+
+spi_sva u_sva (
+  .sclk      (sclk    ),
+  .cs_n      (cs_n    ),
+  .mosi      (mosi    ),
+  .wr_clk    (wr_clk  ),
+  .wr_rst_n  (wr_rst_n),
+  .wr_full   (/*TODO*/),
+  .rx_data   (rx_data ),
+  .wr_en     (wr_en   ),
 );
 
 always #2.5 wr_clk = ~wr_clk;
