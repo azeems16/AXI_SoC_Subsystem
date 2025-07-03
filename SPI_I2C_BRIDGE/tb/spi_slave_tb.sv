@@ -27,7 +27,7 @@ spi_sva u_sva (
   .wr_rst_n  (wr_rst_n),
   .wr_full   (/*TODO*/),
   .rx_data   (rx_data ),
-  .wr_en     (wr_en   ),
+  .wr_en     (wr_en   )
 );
 
 always #2.5 wr_clk = ~wr_clk;
