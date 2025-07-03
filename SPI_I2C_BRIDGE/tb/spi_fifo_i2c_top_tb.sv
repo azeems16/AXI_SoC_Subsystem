@@ -170,12 +170,12 @@ initial begin
     #300;
 
     // Writes
-    for (int i = 0; i < 17; i++) begin
+    for (int i = 0; i < 5; i++) begin
         write(8'hA0 + i);
     end
 
     // Reads
-    for (int i = 0; i < 1; i++) begin
+    for (int i = 0; i < 5; i++) begin
         read(7'h25);
     end
     
