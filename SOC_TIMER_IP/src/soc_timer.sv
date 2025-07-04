@@ -7,35 +7,35 @@ module soc_timer #(
     parameter         BASE_ADDR    = 32'h0000_0000
 )(
     // AXI-Lite Slave Interface
-    input  logic                     ACLK,
-    input  logic                     ARESETN,
-
-    input  logic [ADDR_WIDTH-1:0]    AWADDR,
-    input  logic                     AWVALID,
-    output logic                     AWREADY,
-
-    input  logic [DATA_WIDTH-1:0]    WDATA,
-    input  logic [(DATA_WIDTH/8)-1:0]WSTRB,
-    input  logic                     WVALID,
-    output logic                     WREADY,
-
-    output logic [1:0]               BRESP,
-    output logic                     BVALID,
-    input  logic                     BREADY,
-
-    input  logic [ADDR_WIDTH-1:0]    ARADDR,
-    input  logic                     ARVALID,
-    output logic                     ARREADY,
-
-    output logic [DATA_WIDTH-1:0]    RDATA,
-    output logic [1:0]               RRESP,
-    output logic                     RVALID,
-    input  logic                     RREADY,
-
-    // Output: interrupt line
-    output logic                     irq,
-
-    output bit                       timer_event
+    input  logic                      ACLK,
+    input  logic                      ARESETN,
+ 
+    input  logic [ADDR_WIDTH-1:0]     AWADDR,
+    input  logic                      AWVALID,
+    output logic                      AWREADY,
+ 
+    input  logic [DATA_WIDTH-1:0]     WDATA,
+    input  logic [(DATA_WIDTH/8)-1:0] WSTRB,
+    input  logic                      WVALID,
+    output logic                      WREADY,
+ 
+    output logic [1:0]                BRESP,
+    output logic                      BVALID,
+    input  logic                      BREADY,
+ 
+    input  logic [ADDR_WIDTH-1:0]     ARADDR,
+    input  logic                      ARVALID,
+    output logic                      ARREADY,
+ 
+    output logic [DATA_WIDTH-1:0]     RDATA,
+    output logic [1:0]                RRESP,
+    output logic                      RVALID,
+    input  logic                      RREADY,
+ 
+    // Output: interrupt line 
+    output logic                      irq,
+ 
+    output bit                        timer_event
 );
 
 logic awc_hs, wc_hs, ar_hs;
@@ -184,7 +184,6 @@ always @ (posedge ACLK or negedge ARESETN) begin
 end
 
 // Countdown Timer Always Block
-wire clear_irq = int_clear_reg[IRQ_FLAG_BIT];
 always @ (posedge ACLK or negedge ARESETN) begin
     if (!ARESETN) begin
         counter      <= 0;
@@ -228,5 +227,55 @@ always @ (posedge ACLK or negedge ARESETN) begin
 end
 
 assign irq = (irq_flag && !control_reg[CTRL_IRQ_MASK_BIT]);
+
+// Assertions
+property maskon_irqoff;
+    @(posedge ACLK) disable iff (!ARESETN)
+    control_reg[CTRL_IRQ_MASK_BIT] |-> !irq;
+endproperty
+
+property irqon_when_timerexpire_maskoff;
+    @(posedge ACLK) disable iff (!ARESETN)
+    irq |-> !control_reg[CTRL_IRQ_MASK_BIT] && (counter == 0);
+endproperty
+
+property oneshot_timer_disables;
+    @(posedge ACLK) disable iff (!ARESETN)
+    (!control_reg[CTRL_AUTO_RELOAD_BIT] && counter == 0 && timer_en) |-> ##1 !timer_en;
+endproperty
+
+property autoreload_restarts_timer;
+    @(posedge ACLK) disable iff (!ARESETN)
+    (control_reg[CTRL_AUTO_RELOAD_BIT] && counter == 0 && timer_en) |-> ##1 counter == timer_val_reg;
+endproperty
+
+property no_read_from_write_only;
+    @(posedge ACLK) disable iff (!ARESETN)
+    (ARVALID && ARREADY && ARADDR == INT_CLEAR_REG_OFFSET) |-> 0;
+endproperty
+
+property no_write_to_read_only;
+    @(posedge ACLK) disable iff (!ARESETN)
+    (AWVALID && AWREADY && 
+     (AWADDR == INT_STATUS_REG_OFFSET || AWADDR == COUNTER_REG_OFFSET)) |-> 0;
+endproperty
+
+// When IRQ mask bit is set, IRQ must be low
+assert property (maskon_irqoff);
+
+// When counter hits 0 and IRQ is unmasked, IRQ should be high
+assert property (irqon_when_timerexpire_maskoff);
+
+// One-shot mode disables timer after expiry
+assert property (oneshot_timer_disables);
+
+// Auto-reload mode reloads timer after expiry
+assert property (autoreload_restarts_timer);
+
+// Clear register is write-only: reading it is illegal
+assert property (no_read_from_write_only);
+
+// Interrupt status and counter registers are read-only: writing is illegal
+assert property (no_write_to_read_only);
 
 endmodule

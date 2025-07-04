@@ -1,3 +1,4 @@
+`include "soc_timer_coverage.sv"
 module soc_timer_tb;
 import soc_timer_reg_pkg::*;
 
@@ -48,13 +49,22 @@ soc_timer timer (
     .irq     (irq)     
 );
 
-soc_timer_coverage coverage_tb;
+soc_timer_coverage soc_timer_cvrg;
 
-initial coverage_tb = new(ACLK, ARESETN);
+always @ (posedge ACLK) begin
+    if (AWVALID && AWREADY) begin
+        if (AWADDR == 32'h04) soc_timer_cvrg.cvrg_control_reg <= WDATA;
+        if (AWADDR == 32'h10) soc_timer_cvrg.cvrg_clear_reg   <= WDATA;
+    end
+    if (ARVALID && ARREADY && ARADDR == 32'h0C)
+        soc_timer_cvrg.cvrg_irq_reg <= RDATA;
+end
+
+initial soc_timer_cvrg = new(ACLK);
 
 always @ (posedge ACLK) begin
     if (ARESETN) begin
-        coverage_tb.drive_sample(AWVALID, AWREADY, WVALID, WREADY, BVALID, BREADY, ARVALID, ARREADY, RVALID, RREADY, irq);
+        soc_timer_cvrg.drive_sample(ARESETN, AWVALID, AWREADY, AWADDR, WVALID, WREADY, WDATA, ARVALID, ARREADY, ARADDR, RVALID, RREADY, RDATA, irq);
     end
 end
 
