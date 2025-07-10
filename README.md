@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AXI SoC Subsystem
 
 This repository contains a set of self-contained RTL design modules and subsystems, each focused on a specific digital design concept using Verilog/SystemVerilog.
