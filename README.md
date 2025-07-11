@@ -53,6 +53,10 @@ You can clone the entire repo or use individual folders as IP blocks in your SoC
 - All projects were simulated and validated on EDAPlayground using Cadence Xcelium 23.09 or Aldec Riviera Pro 2023.04 simulator
 ---
 
+## Future Additions
+- AR/AW/B/AR/R ID support
+- UVM: functional coverage 
+
 ## Author
 
 Azeem Shah  
