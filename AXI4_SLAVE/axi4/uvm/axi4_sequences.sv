@@ -10,7 +10,7 @@ endfunction
 virtual task body();
     repeat(5)
         begin
-            txn = axi_txn::type_id::create("txn");
+            txn = axi_txn#(32,32)::type_id::create("txn");
             start_item(txn);
             assert(txn.randomize() with {
                 is_write == 1;
@@ -35,7 +35,7 @@ endfunction
 virtual task body();
     repeat(5)
         begin
-            txn = axi_txn::type_id::create("txn");
+            txn = axi_txn#(32,32)::type_id::create("txn");
             start_item(txn);
             assert(txn.randomize() with {
                 is_write == 1;
@@ -60,7 +60,7 @@ endfunction
 virtual task body();
     repeat(5)
         begin
-            txn = axi_txn::type_id::create("txn");
+            txn = axi_txn#(32,32)::type_id::create("txn");
             start_item(txn);
             assert(txn.randomize() with {
                 is_write == 1;
@@ -85,7 +85,7 @@ endfunction
 virtual task body();
     int wrap_lengths[] = '{1, 3, 7, 15};
     foreach (wrap_lengths[i]) begin
-        txn = axi_txn::type_id::create("txn");
+        txn = axi_txn#(32,32)::type_id::create("txn");
         start_item(txn);
         assert(txn.randomize() with {
             is_write == 1;
@@ -110,7 +110,7 @@ endfunction
 virtual task body();
     repeat(5)
         begin
-            txn = axi_txn::type_id::create("txn");
+            txn = axi_txn#(32,32)::type_id::create("txn");
             start_item(txn);
             assert(txn.randomize() with {
                 is_write == 0;
@@ -135,7 +135,7 @@ endfunction
 virtual task body();
     repeat(5)
         begin
-            txn = axi_txn::type_id::create("txn");
+            txn = axi_txn#(32,32)::type_id::create("txn");
             start_item(txn);
             assert(txn.randomize() with {
                 is_write == 0;
@@ -160,7 +160,7 @@ endfunction
 virtual task body();
     repeat(5)
         begin
-            txn = axi_txn::type_id::create("txn");
+            txn = axi_txn#(32,32)::type_id::create("txn");
             start_item(txn);
             assert(txn.randomize() with {
                 is_write == 0;
@@ -185,7 +185,7 @@ endfunction
 virtual task body();
     int wrap_lengths[] = '{1, 3, 7, 15};
     foreach (wrap_lengths[i]) begin
-        txn = axi_txn::type_id::create("txn");
+        txn = axi_txn#(32,32)::type_id::create("txn");
         start_item(txn);
         assert(txn.randomize() with {
             is_write == 0;
@@ -208,7 +208,7 @@ function new(input name = "invalid_wstrb");
 endfunction
 
 virtual task body();
-    txn = axi_txn::type_id::create("txn");
+    txn = axi_txn#(32,32)::type_id::create("txn");
     start_item(txn);
     txn.legal_wstrb.constraint_mode(0);
     assert(txn.randomize() with {
@@ -232,7 +232,7 @@ function new(input name = "invalid_burst");
 endfunction
 
 virtual task body();
-    txn = axi_txn::type_id::create("txn");
+    txn = axi_txn#(32,32)::type_id::create("txn");
     start_item(txn);
     txn.legal_burst.constraint_mode(0);
     assert(txn.randomize() with {
@@ -253,7 +253,7 @@ function new(input string name = "misaligned_addr");
 endfunction
 
 virtual task body();
-    txn = axi_txn::type_id::create("txn");
+    txn = axi_txn#(32,32)::type_id::create("txn");
     txn.addr_align.constraint_mode(0);
     start_item(txn);
     assert(txn.randomize() with {

@@ -1,4 +1,4 @@
-class axi_monitor extends uvm_monitor#(axi_txn#(32,32));
+class axi_monitor extends uvm_monitor;
 `uvm_component_utils(axi_monitor)
 
 uvm_analysis_port#(axi_txn#(32,32)) send;
@@ -26,13 +26,12 @@ virtual task monitor_write();
             trm.size     = vif.AWSIZE;
             trm.burst    = vif.AWBURST;
             trm.wdata    = new[vif.AWLEN+1];
-            trm.wstrb    = new[vif.AWLEN+1];
             trm.is_write = 1;
         
             for (int i = 0; i <= vif.AWLEN; i++) begin  // use wait instead of if so we dont miss a beat
                 wait(vif.WVALID && vif.WREADY);
                 trm.wdata[i] = vif.WDATA;
-                trm.wstrb[i] = vif.WSTRB;
+                trm.wstrb    = vif.WSTRB;
                 @(posedge vif.ACLK);
             end
 
@@ -70,8 +69,8 @@ virtual task monitor_read();
 endtask
 
 virtual task run_phase(uvm_phase phase);
-    wait (!vif.ARESETn);
-    wait (vif.ARESETn);
+    wait (!vif.ARESETN);
+    wait (vif.ARESETN);
     fork
         monitor_write();
         monitor_read();

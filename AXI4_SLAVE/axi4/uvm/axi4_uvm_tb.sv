@@ -1,3 +1,6 @@
+`include "uvm_macros.svh"
+ import uvm_pkg::*;
+ 
 module axi4_uvm_tb;
 
 axi4_intf #(32, 32) axi4_intf();

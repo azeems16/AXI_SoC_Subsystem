@@ -1,9 +1,9 @@
-class axi_agent extends uvm_agent;
-`uvm_component_utils(axi_agent)
+class axi4_agent extends uvm_agent;
+`uvm_component_utils(axi4_agent)
 
 uvm_sequencer#(axi_txn#(32,32)) seqr;
-axi_driver#(axi_txn#(32,32)) drv;
-axi_monitor#(axi_txn#(32,32)) mon;
+axi_driver drv;
+axi_monitor mon;
 virtual axi4_intf vif;
 
 function new(input string name = "agent", uvm_component parent = null);
@@ -20,8 +20,8 @@ function void build_phase(uvm_phase phase);
     uvm_config_db#(virtual axi4_intf)::set(this, "drv", "vif", vif);
     uvm_config_db#(virtual axi4_intf.monitor)::set(this, "mon", "vif", vif.monitor);
 
-    drv  = axi_driver#(axi_txn#(32,32))::type_id::create("drv", this);
-    mon  = axi_monitor#(axi_txn#(32,32))::type_id::create("mon", this);
+    drv  = axi4_driver::type_id::create("drv", this);
+    mon  = axi4_monitor::type_id::create("mon", this);
     seqr = uvm_sequencer#(axi_txn#(32,32))::type_id::create("seqr", this);
 endfunction
 

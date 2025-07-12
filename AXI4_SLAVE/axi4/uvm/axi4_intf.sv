@@ -43,6 +43,7 @@ logic                  RVALID ;
 logic                  RREADY ;
 
 modport monitor (
+    input ACLK, ARESETN, 
     input AWADDR, AWLEN, AWSIZE, AWBURST, AWVALID, AWREADY,
     input WDATA, WSTRB, WLAST, WVALID, WREADY,
     input BRESP, BVALID, BREADY,
@@ -54,9 +55,9 @@ modport driver (
     input ACLK, ARESETN,
     input AWREADY, 
     input WREADY,
-    input BVALID,
+    input BVALID, BRESP, 
     input ARREADY,
-    input RVALID, RLAST, 
+    input RVALID, RDATA, RLAST, RRESP,
 
     output AWADDR, AWLEN, AWSIZE, AWBURST, AWVALID,
     output WDATA, WSTRB, WVALID, WLAST, 

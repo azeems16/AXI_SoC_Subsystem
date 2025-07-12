@@ -1,10 +1,10 @@
-class axi_driver extends uvm_driver#(axi_txn#(32,32))
-`uvm_component_utils(axi_driver)
+class axi4_driver extends uvm_driver#(axi_txn#(32,32));
+`uvm_component_utils(axi4_driver)
 
 virtual axi4_intf.driver vif;
-axi_txn tr;
+axi_txn#(32,32) tr;
 
-function new(input string name = "axi_driver", uvm_component parent = null);
+function new(input string name = "axi4_driver", uvm_component parent = null);
     super.new(name, parent);
 endfunction
 
@@ -108,7 +108,7 @@ task drive_read(axi_txn#(32, 32) tr);
     for (int i = 0; i <= tr.len; i++) begin
         wait(vif.RVALID && vif.RREADY); // must wait for handshake before assigning RDATA
         @(posedge vif.ACLK);
-        tr.rdata[i]  <= vif.RDATA;
+        tr.rdata[i]  = vif.RDATA;
         if (vif.RLAST) tr.resp   <= vif.RRESP; // on RLAST, assign resp 
     end
 

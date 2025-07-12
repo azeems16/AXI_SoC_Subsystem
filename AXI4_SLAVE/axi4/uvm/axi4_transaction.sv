@@ -1,3 +1,6 @@
+`include "uvm_macros.svh"
+ import uvm_pkg::*;
+
 class axi_txn #(
     parameter int ADDR_WIDTH = 32 ,
     parameter int DATA_WIDTH = 32 
@@ -12,7 +15,7 @@ rand logic [2:0]                size    ;
 rand logic [1:0]                burst   ;
 
 rand logic [DATA_WIDTH-1:0]     wdata[] ;
-rand logic [(DATA_WIDTH/8)-1:0] wstrb[] ;
+rand logic [(DATA_WIDTH/8)-1:0] wstrb   ;
 
 logic [DATA_WIDTH-1:0]          rdata[] ;
 logic [1:0]                     resp    ;

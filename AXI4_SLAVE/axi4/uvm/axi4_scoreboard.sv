@@ -1,4 +1,4 @@
-class axi4_scoreboard extends uvm_scoreboard
+class axi4_scoreboard extends uvm_scoreboard;
 `uvm_component_utils(axi4_scoreboard)
 
 uvm_analysis_imp#(axi_txn#(32,32), axi4_scoreboard) recv;
