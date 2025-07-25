@@ -43,31 +43,31 @@ endfunction
 
 virtual task run_phase(uvm_phase phase);
     phase.raise_objection(this);
-    single_beat_fixed_write.start(env.agent.seqr);
+    sbfw.start(env.agent.seqr);
     #10;
-    single_beat_fixed_read.start(env.agent.seqr); 
+    mbfw.start(env.agent.seqr); 
     #50;
     
-    multi_beat_fixed_write.start(env.agent.seqr);
+    mbfw.start(env.agent.seqr);
     #10;
-    multi_beat_fixed_read.start(env.agent.seqr); 
+    mbfr.start(env.agent.seqr); 
     #50;
     
-    multi_beat_incr_write.start(env.agent.seqr); 
+    mbiw.start(env.agent.seqr); 
     #10;
-    multi_beat_incr_read.start(env.agent.seqr);  
+    mbir.start(env.agent.seqr);  
     #50;
     
-    multi_beat_wrap_write.start(env.agent.seqr); 
+    mbww.start(env.agent.seqr); 
     #10;
-    multi_beat_wrap_read.start(env.agent.seqr);  
+    mbwr.start(env.agent.seqr);  
     #50;
     
-    invalid_wstrb.start(env.agent.seqr);          
+    inv_wstrb.start(env.agent.seqr);          
     #50;
-    invalid_burst.start(env.agent.seqr);          
+    inv_burst.start(env.agent.seqr);          
     #50;
-    misaligned_addr.start(env.agent.seqr);
+    mis_addr.start(env.agent.seqr);
     #50;
     phase.drop_objection(this);
 endtask
