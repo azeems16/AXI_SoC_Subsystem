@@ -1,4 +1,4 @@
-interface axi_lite_if #(
+interface dma_slave_if #(
     parameter ADDR_WIDTH = 32,
     parameter DATA_WIDTH = 32
 );
